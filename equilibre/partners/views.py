@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.views.generic import DetailView , ListView , TemplateView
-from .models import Partner, PartnerType
+from .models import Partner
 
 
 
 class PartnerCarouselView(ListView):
     model = Partner 
-    template_name = 'partners/home.html'
+    template_name = 'home.html'
     context_object_name = 'partners'
     
 

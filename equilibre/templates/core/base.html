@@ -1,15 +1,17 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Agence Digitale Innovante{% endblock %}</title>
+    <title>{% block title %}Agence Equilibre{% endblock %}</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Dans le <head> -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
 
     <style>
         :root {
@@ -146,7 +148,7 @@
                         <a class="nav-link" href="{% url 'about' %}">Notre Agence</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'service_list' %}">Nos Services</a>
+                        <a class="nav-link" href="{% url 'service-list' %}">Nos Services</a>
                     </li>
                     <li class="nav-item ms-lg-3">
                         <a class="btn btn-accent" href="{% url 'contact_form' %}">Contactez-nous</a>
@@ -181,7 +183,7 @@
                     <h4 class="footer-heading">Liens utiles</h4>
                     <a href="{% url 'home' %}" class="footer-link">Accueil</a>
                     <a href="{% url 'about' %}" class="footer-link">Notre agence</a>
-                    <a href="{% url 'service_list' %}" class="footer-link">Services</a>
+                    <a href="{% url 'service-list' %}" class="footer-link">Services</a>
                     <a href="{% url 'contact_form' %}" class="footer-link">Contact</a>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4">
@@ -201,7 +203,7 @@
             </div>
             <div class="row">
                 <div class="col-12 text-center copyright">
-                    <p>&copy; {% now "Y" %} Agence Digitale. Tous droits réservés.</p>
+                    <p>&copy; {% now "Y" %} Agence Equilibre. Tous droits réservés.</p>
                 </div>
             </div>
         </div>

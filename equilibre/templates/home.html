@@ -1,6 +1,8 @@
 {% extends "core/base.html" %}
 {% load static %}
 
+
+
 {% block content %}
 <!-- Hero Carousel -->
 <section class="hero-section">
@@ -73,19 +75,19 @@
         <div class="row text-center">
             <div class="col-6 col-md-3 mb-4 mb-md-0">
                 <div class="counter" data-target="3">0</div>
-                <p>+ ans d'expérience</p>
+                <p>+ 3ans d'expérience</p>
             </div>
             <div class="col-6 col-md-3 mb-4 mb-md-0">
                 <div class="counter" data-target="10">0</div>
-                <p>+ experts</p>
+                <p>+ 10 experts</p>
             </div>
             <div class="col-6 col-md-3">
                 <div class="counter" data-target="50">0</div>
-                <p>+ projets livrés</p>
+                <p>+ 45 projets livrés</p>
             </div>
             <div class="col-6 col-md-3">
                 <div class="counter" data-target="100">0</div>
-                <p>% de satisfaction</p>
+                <p>100% de satisfaction</p>
             </div>
         </div>
     </div>
@@ -93,20 +95,21 @@
 
 <!-- Partners Carousel -->
 <section class="py-5">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2>Ils nous <span class="text-cobalt">font confiance</span></h2>
+    <!-- Carousel Partenaires -->
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        {% for partner in partners %}
+        <div class="swiper-slide">
+            <!-- Utilisation directe du champ ImageField -->
+            <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="img-fluid">
         </div>
-        <div class="swiper partners-swiper">
-            <div class="swiper-wrapper align-items-center">
-                {% for partner in partners %}
-                <div class="swiper-slide">
-                    <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="img-fluid partner-logo">
-                </div>
-                {% endfor %}
-            </div>
-        </div>
+        {% empty %}
+        <div class="alert alert-info">Aucun partenaire disponible</div>
+        {% endfor %}
     </div>
+    <!-- Ajoutez la pagination si besoin -->
+    <div class="swiper-pagination"></div>
+</div>
 </section>
 
 <!-- Contact Form -->
@@ -175,7 +178,7 @@
     }
     
     .partner-logo {
-        max-height: 80px;
+        max-height: 200px;
         width: auto;
         filter: grayscale(100%);
         opacity: 0.7;
@@ -197,6 +200,26 @@
         color: white;
     }
 </style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        new Swiper('.partner-swiper', {
+            loop: true,
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            breakpoints: {
+                640: { slidesPerView: 2 },
+                768: { slidesPerView: 3 },
+                1024: { slidesPerView: 4 }
+            }
+        });
+    });
+    </script>
 
 <script>
     // Animation des compteurs
