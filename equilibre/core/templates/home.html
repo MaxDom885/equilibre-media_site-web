@@ -1,0 +1,249 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Carousel -->
+<section class="hero-section">
+    <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            {% for i in "123" %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{% static 'img/hero-'|add:i|add:'.jpg' %}" class="d-block w-100" alt="Slide {{ i }}">
+                <div class="carousel-caption">
+                    <h1 class="display-3 fw-bold">Trouvez l'équilibre entre <br>INNOVATION et PERFORMANCE.</h1>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+</section>
+
+<!-- Split Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img src="{% static 'img/about-preview.jpg' %}" alt="Notre agence" class="img-fluid rounded-3 shadow">
+            </div>
+            <div class="col-lg-6 ps-lg-5">
+                <h2 class="mb-4">Une approche <span class="text-cobalt">humaine</span> du digital</h2>
+                <p class="lead">Nous transformons les idées audacieuses en solutions technologiques performantes.</p>
+                <p>Notre agence allie expertise technique et vision stratégique pour propulser votre présence digitale.</p>
+                <a href="{% url 'about' %}" class="btn btn-primary mt-3">Découvrir notre agence</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2>Nos <span class="text-cobalt">Expertises</span></h2>
+            <p class="lead">Des solutions sur mesure pour chaque défi digital</p>
+        </div>
+        <div class="row g-4">
+            {% for service in services %}
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-{{ service.icon|default:'cog' }} fa-2x text-cobalt"></i>
+                        </div>
+                        <h5 class="card-title">{{ service.name }}</h5>
+                        <p class="card-text">{{ service.short_description }}</p>
+                        <a href="{% url 'service_detail' service.slug %}" class="btn btn-sm btn-outline-cobalt">En savoir plus</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-5 bg-cobalt text-white">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-6 col-md-3 mb-4 mb-md-0">
+                <div class="counter" data-target="3">0</div>
+                <p>+ ans d'expérience</p>
+            </div>
+            <div class="col-6 col-md-3 mb-4 mb-md-0">
+                <div class="counter" data-target="10">0</div>
+                <p>+ experts</p>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="counter" data-target="50">0</div>
+                <p>+ projets livrés</p>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="counter" data-target="100">0</div>
+                <p>% de satisfaction</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Partners Carousel -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2>Ils nous <span class="text-cobalt">font confiance</span></h2>
+        </div>
+        <div class="swiper partners-swiper">
+            <div class="swiper-wrapper align-items-center">
+                {% for partner in partners %}
+                <div class="swiper-slide">
+                    <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="img-fluid partner-logo">
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow">
+                    <div class="card-body p-5">
+                        <h2 class="text-center mb-4">Prêt à transformer votre projet ?</h2>
+                        <form method="post" action="{% url 'contact_form' %}">
+                            {% csrf_token %}
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="name" placeholder="Votre nom" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control" name="email" placeholder="Votre email" required>
+                                </div>
+                                <div class="col-12">
+                                    <input type="text" class="form-control" name="subject" placeholder="Sujet">
+                                </div>
+                                <div class="col-12">
+                                    <textarea class="form-control" name="message" rows="5" placeholder="Votre message" required></textarea>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-accent px-4">Envoyer</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Custom CSS */
+    .hero-section {
+        position: relative;
+    }
+    
+    .carousel-caption {
+        bottom: 30%;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+    
+    .service-card {
+        transition: transform 0.3s;
+        border-radius: 12px;
+    }
+    
+    .service-card:hover {
+        transform: translateY(-10px);
+    }
+    
+    .counter {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    
+    .partners-swiper {
+        padding: 20px 0;
+    }
+    
+    .partner-logo {
+        max-height: 80px;
+        width: auto;
+        filter: grayscale(100%);
+        opacity: 0.7;
+        transition: all 0.3s;
+    }
+    
+    .partner-logo:hover {
+        filter: grayscale(0);
+        opacity: 1;
+    }
+    
+    .btn-outline-cobalt {
+        color: var(--cobalt);
+        border-color: var(--cobalt);
+    }
+    
+    .btn-outline-cobalt:hover {
+        background-color: var(--cobalt);
+        color: white;
+    }
+</style>
+
+<script>
+    // Animation des compteurs
+    const counters = document.querySelectorAll('.counter');
+    const speed = 200;
+    
+    function animateCounters() {
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            const count = +counter.innerText;
+            const increment = target / speed;
+            
+            if (count < target) {
+                counter.innerText = Math.ceil(count + increment);
+                setTimeout(animateCounters, 1);
+            } else {
+                counter.innerText = target + (counter.getAttribute('data-target') === '100' ? '%' : '+';
+            }
+        });
+    }
+    
+    // Lance l'animation quand la section est visible
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            animateCounters();
+        }
+    }, {threshold: 0.5});
+    
+    observer.observe(document.querySelector('.bg-cobalt'));
+    
+    // Initialisation du swiper
+    const swiper = new Swiper('.partners-swiper', {
+        slidesPerView: 2,
+        spaceBetween: 30,
+        loop: true,
+        autoplay: {
+            delay: 2500,
+            disableOnInteraction: false,
+        },
+        breakpoints: {
+            768: {
+                slidesPerView: 4,
+            },
+            992: {
+                slidesPerView: 6,
+            }
+        }
+    });
+</script>
+{% endblock %}

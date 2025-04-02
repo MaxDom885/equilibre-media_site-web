@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import PartnerType, Partner
+from .models import Partner
 
 
 @admin.register(Partner)
 class PartnerAdmin(admin.ModelAdmin):
     list_display = ('name', 'is_active', )
-    list_filter = ( 'is_active')
+    list_filter = ( 'name','is_active')
     
     

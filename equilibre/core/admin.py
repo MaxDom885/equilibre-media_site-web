@@ -1,5 +1,7 @@
+# core/admin.py (exemple si modèle existe)
 from django.contrib import admin
-from .models import Site_Config
+from .models import SiteConfig
 
-# Register your models here.
-admin.site.register(Site_Config)
+@admin.register(SiteConfig)
+class SiteConfigAdmin(admin.ModelAdmin):
+    pass

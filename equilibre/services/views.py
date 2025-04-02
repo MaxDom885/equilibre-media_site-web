@@ -1,10 +1,6 @@
 from django.views.generic import ListView , DetailView
 from .models import Service
 
-
-
-
-
 class ServiceListView(ListView):
     model = Service
     template_name = 'services/service_list.html'
@@ -14,11 +10,6 @@ class ServiceListView(ListView):
     def get_queryset(self):
         return Service.objects.filter(is_active=True).order_by('name')
     
-    
-    
-    
-
-
 class ServiceDetailView(DetailView):
     model = Service
     template_name = 'services/service_detail.html'
