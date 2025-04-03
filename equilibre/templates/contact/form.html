@@ -1,0 +1,106 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Contactez-nous | Agence Equilibre{% endblock %}
+
+{% block content %}
+<!-- Section Contact -->
+<section class="contact-section py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-lg overflow-hidden">
+                    <div class="row g-0">
+                        <!-- Colonne Formulaire -->
+                        <div class="col-md-7 p-4 p-lg-5 bg-white">
+                            <h2 class="display-5 fw-bold text-cobalt mb-4">Parlons de votre projet</h2>
+                            
+                            <form method="post" class="needs-validation" novalidate>
+                                {% csrf_token %}
+                                
+                                <div class="mb-3">
+                                    <label for="id_name" class="form-label">Votre nom</label>
+                                    <input type="text" class="form-control py-2" id="id_name" name="name" required>
+                                    <div class="invalid-feedback">Merci de renseigner votre nom</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="id_email" class="form-label">Votre email</label>
+                                    <input type="email" class="form-control py-2" id="id_email" name="email" required>
+                                    <div class="invalid-feedback">Merci de renseigner un email valide</div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="id_message" class="form-label">Votre message</label>
+                                    <textarea class="form-control" id="id_message" name="message" rows="5" required></textarea>
+                                    <div class="invalid-feedback">Merci de saisir votre message</div>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-accent btn-lg w-100">
+                                    <i class="fas fa-paper-plane me-2"></i> Envoyer
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <!-- Colonne Infos -->
+                        <div class="col-md-5 bg-cobalt text-white p-4 p-lg-5">
+                            <h3 class="h4 fw-bold mb-4">Nos coordonnées</h3>
+                            
+                            <ul class="list-unstyled">
+                                <li class="mb-3">
+                                    <i class="fas fa-map-marker-alt me-3"></i>
+                                    <span>123 Rue Digitale, 75000 Paris</span>
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-phone me-3"></i>
+                                    <a href="tel:+33123456789" class="text-white">+33 1 23 45 67 89</a>
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fab fa-whatsapp me-3"></i>
+                                    <a href="https://wa.me/33612345678" class="text-white">+33 6 12 34 56 78</a>
+                                </li>
+                                <li class="mb-4">
+                                    <i class="fas fa-envelope me-3"></i>
+                                    <a href="mailto:contact@agence-equilibre.com" class="text-white">contact@agence-equilibre.com</a>
+                                </li>
+                            </ul>
+                            
+                            <hr class="border-white opacity-50 my-4">
+                            
+                            <h4 class="h5 fw-bold mb-3">Horaires d'ouverture</h4>
+                            <p class="small mb-0">Lun-Ven : 9h-18h</p>
+                            <p class="small">Sam : 10h-14h</p>
+                            
+                            <div class="mt-4 pt-2">
+                                <a href="#" class="text-white me-3"><i class="fab fa-facebook-f fa-lg"></i></a>
+                                <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                                <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                                <a href="#" class="text-white"><i class="fab fa-twitter fa-lg"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Validation Bootstrap
+(function () {
+  'use strict'
+  const forms = document.querySelectorAll('.needs-validation')
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+</script>
+{% endblock %}

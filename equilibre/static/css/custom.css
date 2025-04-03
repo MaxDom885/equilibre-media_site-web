@@ -351,3 +351,54 @@ footer {
 .card:hover i {
     animation: pulse 1.5s infinite;
 }
+
+/* Contact Section */
+.contact-section {
+    background: linear-gradient(135deg, rgba(7, 79, 179, 0.03) 0%, rgba(255, 255, 255, 1) 100%);
+}
+
+.bg-cobalt {
+    background-color: var(--cobalt) !important;
+}
+
+/* Effet de focus personnalisé */
+.form-control:focus {
+    border-color: var(--cobalt);
+    box-shadow: 0 0 0 0.25rem rgba(7, 79, 179, 0.25);
+}
+
+/* Animation du bouton */
+.btn-accent:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(240, 0, 32, 0.3);
+}
+/* Animation des compteurs */
+.counter {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+    min-width: 60px;
+}
+
+.bg-cobalt {
+    background-color: #074FB3;
+    position: relative;
+    overflow: hidden;
+}
+
+.bg-cobalt::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.bg-cobalt:hover::before {
+    opacity: 1;
+}

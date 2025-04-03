@@ -83,16 +83,16 @@
                 <p>+ 3ans d'expérience</p>
             </div>
             <div class="col-6 col-md-3 mb-4 mb-md-0">
-                <div class="counter" data-target="10">0</div>
-                <p>+ 10 experts</p>
+                <div class="counter" data-target="10">+0</div>
+                <p> experts</p>
             </div>
             <div class="col-6 col-md-3">
-                <div class="counter" data-target="50">0</div>
-                <p>+ 45 projets livrés</p>
+                <div class="counter" data-target="45">+0</div>
+                <p> projets livrés</p>
             </div>
             <div class="col-6 col-md-3">
-                <div class="counter" data-target="100">0</div>
-                <p>100% de satisfaction</p>
+                <div class="counter" data-target="100">+0</div>
+                <p> de satisfaction</p>
             </div>
         </div>
     </div>
@@ -167,4 +167,67 @@
 
 
 
+{% endblock %}
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animation des compteurs
+        const animateCounters = () => {
+            const counters = document.querySelectorAll('.counter');
+            const speed = 200;
+            
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const increment = target / speed;
+                
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(animateCounters, 1);
+                } else {
+                    counter.innerText = target + (counter.getAttribute('data-target') === '100' ? '%' : '+';
+                }
+            });
+        };
+    
+        // Observer pour déclencher l'animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target); // Arrête d'observer après déclenchement
+                }
+            });
+        }, { 
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px' // Déclenche un peu avant d'arriver à la section
+        });
+    
+        // Observer la section stats
+        const statsSection = document.getElementById('stats-section');
+        if (statsSection) {
+            observer.observe(statsSection);
+        }
+    
+        // Initialisation Swiper (si vous en avez besoin)
+        if (document.querySelector('.partner-swiper')) {
+            new Swiper('.partner-swiper', {
+                loop: true,
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                breakpoints: {
+                    640: { slidesPerView: 2 },
+                    768: { slidesPerView: 3 },
+                    1024: { slidesPerView: 4 }
+                }
+            });
+        }
+    });
+    </script>
 {% endblock %}
