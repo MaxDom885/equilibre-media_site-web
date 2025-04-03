@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # settings.py
 # Assurez-vous d'avoir ces paramètres
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 
 
 # Application definition
@@ -129,7 +129,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_DIRS = [BASE_DIR / 'static']  # Si vos fichiers statiques sont dans un dossier 'static'
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Dossier où les fichiers collectés seront placés
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

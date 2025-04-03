@@ -1,22 +1,27 @@
 {% extends "core/base.html" %}
 {% load static %}
-
-
+{% block extra_css %}
+    
+{% endblock %}
 
 {% block content %}
 <!-- Hero Carousel -->
-<section class="hero-section">
-    <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
+<section class="hero-carousel fade-in">
+    <div id="mainCarousel" class="carousel slide h-100" data-bs-ride="carousel">
+        <div class="carousel-inner h-100">
             {% for i in "123" %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <div class="carousel-item h-100 {% if forloop.first %}active{% endif %}">
                 <img src="{% static 'img/hero-'|add:i|add:'.jpg' %}" class="d-block w-100" alt="Slide {{ i }}">
                 <div class="carousel-caption">
-                    <h1 class="display-3 fw-bold">Trouvez l'équilibre entre <br>INNOVATION et PERFORMANCE.</h1>
+                    <div class="container">
+                        <h1 class="display-1 fw-bold mb-4">Trouvez l'équilibre<br>entre <span class="text-cobalt">INNOVATION</span><br>et <span class="text-accent">PERFORMANCE</span>.</h1>
+                        <a href="#contact" class="btn btn-accent btn-lg mt-3">Démarrons votre projet</a>
+                    </div>
                 </div>
             </div>
             {% endfor %}
         </div>
+        <!-- Contrôles -->
         <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         </button>
@@ -52,19 +57,19 @@
         </div>
         <div class="row g-4">
             {% for service in services %}
-            <div class="col-md-6 col-lg-3">
-                <div class="card service-card h-100 border-0 shadow-sm">
-                    <div class="card-body text-center p-4">
-                        <div class="icon-wrapper mb-3">
-                            <i class="fas fa-{{ service.icon|default:'cog' }} fa-2x text-cobalt"></i>
-                        </div>
-                        <h5 class="card-title">{{ service.name }}</h5>
-                        <p class="card-text">{{ service.short_description }}</p>
-                        <a href="{% url 'service_detail' service.slug %}" class="btn btn-sm btn-outline-cobalt">En savoir plus</a>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
+    <div class="service-card">
+        <div class="service-icon">
+            <i class="fas fa-{{ service.icon_name }}"></i>
+        </div>
+        <h3>{{ service.name }}</h3>
+        <p>{{ service.short_description|truncatechars:100 }}</p>
+        <a href="{% url 'service_detail' service.slug %}" class="btn btn-primary">
+            Voir détails <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+    {% empty %}
+    <p class="text-muted">Aucun service disponible pour le moment</p>
+    {% endfor %}
         </div>
     </div>
 </section>
@@ -94,22 +99,35 @@
 </section>
 
 <!-- Partners Carousel -->
-<section class="py-5">
-    <!-- Carousel Partenaires -->
-<div class="swiper-container">
-    <div class="swiper-wrapper">
-        {% for partner in partners %}
-        <div class="swiper-slide">
-            <!-- Utilisation directe du champ ImageField -->
-            <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="img-fluid">
+<!-- Section Partenaires -->
+<section class="partners-section py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Nos <span class="text-primary">Partenaires</span></h2>
+        
+        <div id="partnersCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                {% for partner in partners %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <div class="row justify-content-center">
+                        {% for p in partners|slice:":6" %}  <!-- 6 logos par slide -->
+                        <div class="col-4 col-md-2 text-center py-3">
+                            <img src="{{ p.logo.url }}" 
+                                 alt="{{ p.name }}" 
+                                 class="img-fluid partner-logo">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#partnersCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#partnersCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
         </div>
-        {% empty %}
-        <div class="alert alert-info">Aucun partenaire disponible</div>
-        {% endfor %}
     </div>
-    <!-- Ajoutez la pagination si besoin -->
-    <div class="swiper-pagination"></div>
-</div>
 </section>
 
 <!-- Contact Form -->
@@ -147,126 +165,6 @@
     </div>
 </section>
 
-<style>
-    /* Custom CSS */
-    .hero-section {
-        position: relative;
-    }
-    
-    .carousel-caption {
-        bottom: 30%;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    }
-    
-    .service-card {
-        transition: transform 0.3s;
-        border-radius: 12px;
-    }
-    
-    .service-card:hover {
-        transform: translateY(-10px);
-    }
-    
-    .counter {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-    }
-    
-    .partners-swiper {
-        padding: 20px 0;
-    }
-    
-    .partner-logo {
-        max-height: 200px;
-        width: auto;
-        filter: grayscale(100%);
-        opacity: 0.7;
-        transition: all 0.3s;
-    }
-    
-    .partner-logo:hover {
-        filter: grayscale(0);
-        opacity: 1;
-    }
-    
-    .btn-outline-cobalt {
-        color: var(--cobalt);
-        border-color: var(--cobalt);
-    }
-    
-    .btn-outline-cobalt:hover {
-        background-color: var(--cobalt);
-        color: white;
-    }
-</style>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        new Swiper('.partner-swiper', {
-            loop: true,
-            autoplay: {
-                delay: 2500,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-            breakpoints: {
-                640: { slidesPerView: 2 },
-                768: { slidesPerView: 3 },
-                1024: { slidesPerView: 4 }
-            }
-        });
-    });
-    </script>
 
-<script>
-    // Animation des compteurs
-    const counters = document.querySelectorAll('.counter');
-    const speed = 200;
-    
-    function animateCounters() {
-        counters.forEach(counter => {
-            const target = +counter.getAttribute('data-target');
-            const count = +counter.innerText;
-            const increment = target / speed;
-            
-            if (count < target) {
-                counter.innerText = Math.ceil(count + increment);
-                setTimeout(animateCounters, 1);
-            } else {
-                counter.innerText = target + (counter.getAttribute('data-target') === '100' ? '%' : '+';
-            }
-        });
-    }
-    
-    // Lance l'animation quand la section est visible
-    const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-            animateCounters();
-        }
-    }, {threshold: 0.5});
-    
-    observer.observe(document.querySelector('.bg-cobalt'));
-    
-    // Initialisation du swiper
-    const swiper = new Swiper('.partners-swiper', {
-        slidesPerView: 2,
-        spaceBetween: 30,
-        loop: true,
-        autoplay: {
-            delay: 2500,
-            disableOnInteraction: false,
-        },
-        breakpoints: {
-            768: {
-                slidesPerView: 4,
-            },
-            992: {
-                slidesPerView: 6,
-            }
-        }
-    });
-</script>
+
 {% endblock %}

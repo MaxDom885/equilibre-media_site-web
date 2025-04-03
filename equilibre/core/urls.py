@@ -1,12 +1,20 @@
-# core/urls.py  
-from django.urls import path, include  # Ajoute include()  
-from .views import HomeView, AboutView, ServicesView  
+# core/urls.py
+from django.urls import path, include
+from .views import HomeView, AboutView, ServicesView
 
-urlpatterns = [  
+urlpatterns = [
+    # Page d'accueil
     path('', HomeView.as_view(), name='home'),
-    path("notre-agence/", AboutView.as_view(), name="about"),  
-    path("",include("services.urls")),  # À remplacer plus tard par include("services.urls")  
-    path("", include("team.urls")),  # Inclus les URLs de team/ 
-    path("", include("contact.urls")) ,
-    path("", include("partners.urls")) 
-]  
+    
+    # Page "Notre Agence" avec la section équipe
+    path("notre-agence/", AboutView.as_view(), name="about"),
+    
+    # Applications incluses
+    path("services/", include("services.urls")),  # Structuré avec préfixe
+    path("", include("team.urls")),       # URLs dédiées pour l'équipe
+    path("contact/", include("contact.urls")),   # Contact avec préfixe clair
+    path("partenaires/", include("partners.urls")),  # Partenaires avec préfixe
+    
+    # SEO : URLs alternatives pour rétrocompatibilité
+    path("nos-services/", ServicesView.as_view(), name="services-legacy"),
+]

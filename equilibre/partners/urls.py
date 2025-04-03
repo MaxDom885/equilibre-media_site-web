@@ -3,5 +3,5 @@ from django.urls import path
 from .views import PartnerCarouselView
 
 urlpatterns = [
-    path("", PartnerCarouselView.as_view(), name="partner_carousel"),
+    path("", PartnerCarouselView.as_view(), name="partner"),
 ]

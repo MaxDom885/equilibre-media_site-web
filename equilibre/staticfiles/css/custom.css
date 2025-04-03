@@ -1,0 +1,247 @@
+:root {
+    --cobalt: #074FB3;
+    --primary-accent: #f00020;
+    --cod-gray: #090909;
+    --jordy-blue: #7AACF0;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    color: var(--cod-gray);
+}
+
+.navbar {
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 15px 0;
+}
+
+.navbar-brand img {
+    height: 40px;
+}
+
+.nav-link {
+    color: var(--cod-gray) !important;
+    font-weight: 500;
+    margin: 0 10px;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: var(--cobalt) !important;
+}
+
+.nav-link:hover:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: var(--cobalt);
+    left: 0;
+    bottom: -5px;
+}
+
+.btn-primary {
+    background-color: var(--cobalt);
+    border-color: var(--cobalt);
+    padding: 8px 20px;
+    border-radius: 50px;
+}
+
+.btn-primary:hover {
+    background-color: #063d8f;
+    border-color: #063d8f;
+}
+
+.btn-accent {
+    background-color: var(--primary-accent);
+    color: white;
+    border-radius: 50px;
+    padding: 8px 20px;
+    font-weight: 500;
+}
+
+footer {
+    background-color: var(--cod-gray);
+    color: white;
+    padding: 60px 0 30px;
+}
+
+.footer-logo img {
+    height: 50px;
+    margin-bottom: 20px;
+}
+
+.footer-heading {
+    color: var(--jordy-blue);
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.footer-link {
+    color: #b0b0b0;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 10px;
+    transition: all 0.3s;
+}
+
+.footer-link:hover {
+    color: white;
+    padding-left: 5px;
+}
+
+.social-icon {
+    color: white;
+    font-size: 1.5rem;
+    margin-right: 15px;
+    transition: all 0.3s;
+}
+
+.social-icon:hover {
+    color: var(--jordy-blue);
+}
+
+.copyright {
+    border-top: 1px solid #333;
+    padding-top: 20px;
+    margin-top: 40px;
+    color: #b0b0b0;
+}
+/* Hero Carousel */
+.hero-carousel {
+    height: 100vh; /* Prend toute la hauteur d'écran */
+    min-height: 650px; /* Hauteur minimum sur grands écrans */
+    max-height: 1200px; /* Limite pour les très grands écrans */
+}
+
+.carousel-item {
+    height: 100%;
+}
+
+.carousel-item img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-caption {
+    bottom: 35%;
+    transform: translateY(50%);
+    text-align: left;
+    left: 10%;
+    right: 10%;
+}
+
+.carousel-caption h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+    line-height: 1.2;
+}
+
+@media (max-width: 768px) {
+    .hero-carousel {
+        min-height: 500px;
+    }
+    
+    .carousel-caption h1 {
+        font-size: 2.5rem;
+    }
+    
+    .carousel-caption {
+        bottom: 25%;
+    }
+}
+.hero-carousel {
+    perspective: 1px;
+    transform-style: preserve-3d;
+}
+
+.carousel-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 1;
+}
+.carousel-caption h1 {
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-section {
+    position: relative;
+}
+
+.carousel-caption {
+    bottom: 30%;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.service-card {
+    transition: transform 0.3s;
+    border-radius: 12px;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+}
+
+.counter {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.partners-swiper {
+    padding: 20px 0;
+}
+
+.partner-logo {
+    max-height: 200px;
+    width: auto;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: all 0.3s;
+}
+
+.partner-logo:hover {
+    filter: grayscale(0);
+    opacity: 1;
+}
+
+.btn-outline-cobalt {
+    color: var(--cobalt);
+    border-color: var(--cobalt);
+}
+
+.btn-outline-cobalt:hover {
+    background-color: var(--cobalt);
+    color: white;
+}
+.logo {
+    width: 100px;
+    height: auto;
+}
+
+/* Sur les écrans plus petits */
+@media (max-width: 768px) {
+    .logo {
+        width: 100px;
+    }
+}
