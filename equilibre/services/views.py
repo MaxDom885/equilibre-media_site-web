@@ -1,14 +1,27 @@
-from django.views.generic import ListView , DetailView
+from django.shortcuts import render
+from django.views.generic import ListView, DetailView
 from .models import Service
+
+def home_view(request):
+    # Récupère les services marqués comme featured, actifs et triés
+    featured_services = Service.objects.filter(
+        is_active=True,
+        is_featured=True
+    ).order_by('display_order', 'name')[:6]  # Limite à 6 services maximum
+
+    context = {
+        'services': featured_services,  # J'ai corrigé le nom de la variable pour correspondre à votre template
+    }
+    return render(request, 'home.html', context)
 
 class ServiceListView(ListView):
     model = Service
     template_name = 'services/service_list.html'
     context_object_name = 'services'
-    paginate_by = 6  # Pagination optionnelle
+    paginate_by = 6
 
     def get_queryset(self):
-        return Service.objects.filter(is_active=True).order_by('name')
+        return Service.objects.filter(is_active=True).order_by('display_order', 'name')
     
 class ServiceDetailView(DetailView):
     model = Service
@@ -23,7 +36,3 @@ class ServiceDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['all_services'] = Service.objects.filter(is_active=True).exclude(id=self.object.id)
         return context
-    
-    
-
-

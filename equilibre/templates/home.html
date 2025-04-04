@@ -1,8 +1,9 @@
 {% extends "core/base.html" %}
 {% load static %}
+{% load custom_filters %}
+
 {% block extra_css %}
-    
-{% endblock %}
+{% endblock extra_css %}
 
 {% block content %}
 <!-- Hero Carousel -->
@@ -15,7 +16,7 @@
                 <div class="carousel-caption">
                     <div class="container">
                         <h1 class="display-1 fw-bold mb-4">Trouvez l'équilibre<br>entre <span class="text-cobalt">INNOVATION</span><br>et <span class="text-accent">PERFORMANCE</span>.</h1>
-                        <a href="#contact" class="btn btn-accent btn-lg mt-3">Démarrons votre projet</a>
+                        <a href="{% url 'contact_form' %}" class="btn btn-accent btn-lg px-4">Démarrons votre projet</a>
                     </div>
                 </div>
             </div>
@@ -39,7 +40,7 @@
                 <img src="{% static 'img/about-preview.jpg' %}" alt="Notre agence" class="img-fluid rounded-3 shadow">
             </div>
             <div class="col-lg-6 ps-lg-5">
-                <h2 class="mb-4">Une approche <span class="text-cobalt">humaine</span> du digital</h2>
+                <h2 class="mb-4">Une approche <span class="text-primary">humaine</span> du digital</h2>
                 <p class="lead">Nous transformons les idées audacieuses en solutions technologiques performantes.</p>
                 <p>Notre agence allie expertise technique et vision stratégique pour propulser votre présence digitale.</p>
                 <a href="{% url 'about' %}" class="btn btn-primary mt-3">Découvrir notre agence</a>
@@ -49,28 +50,57 @@
 </section>
 
 <!-- Services Section -->
-<section class="py-5 bg-light">
+<section class="py-5 bg-light" id="services">
     <div class="container">
         <div class="text-center mb-5">
-            <h2>Nos <span class="text-cobalt">Expertises</span></h2>
+            <h2>Nos <span class="text-primary">Expertises</span></h2>
             <p class="lead">Des solutions sur mesure pour chaque défi digital</p>
         </div>
+        
         <div class="row g-4">
             {% for service in services %}
-    <div class="service-card">
-        <div class="service-icon">
-            <i class="fas fa-{{ service.icon }}"></i>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm hover-shadow transition-all">
+                    {% if service.image %}
+                    <img src="{{ service.image.url }}" class="card-img-top" alt="{{ service.name }}" style="height: 180px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            {% if service.icon %}
+                            <div class="icon-box bg-primary bg-opacity-10 text-primary rounded-circle me-3">
+                                <i class="{{ service.icon }}"></i>
+                            </div>
+                            {% endif %}
+                            <h3 class="h5 mb-0">{{ service.name }}</h3>
+                        </div>
+                        <p class="text-muted">{{ service.short_description|truncatechars:120 }}</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 pt-0 pb-3">
+                        <a href="{% url 'service-detail' service.slug %}" class="btn btn-outline-primary btn-sm stretched-link">
+                            Découvrir <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-4">
+                <div class="alert alert-info">
+                    <p class="mb-0">Aucun service à afficher pour le moment</p>
+                </div>
+                <a href="{% url 'service-list' %}" class="btn btn-primary mt-3">
+                    Voir tous nos services
+                </a>
+            </div>
+            {% endfor %}
         </div>
-        <h3>{{ service.name }}</h3>
-        <p>{{ service.short_description|truncatechars:100 }}</p>
-        <a href="{% url 'service_detail' service.slug %}" class="btn btn-primary">
-            Voir détails <i class="fas fa-arrow-right"></i>
-        </a>
-    </div>
-    {% empty %}
-    <p class="text-muted">Aucun service disponible pour le moment</p>
-    {% endfor %}
+        
+        {% if services %}
+        <div class="text-center mt-5">
+            <a href="{% url 'service-list' %}" class="btn btn-primary px-4">
+                Explorer toutes nos expertises <i class="fas fa-arrow-right ms-2"></i>
+            </a>
         </div>
+        {% endif %}
     </div>
 </section>
 
@@ -79,59 +109,64 @@
     <div class="container">
         <div class="row text-center">
             <div class="col-6 col-md-3 mb-4 mb-md-0">
-                <div class="counter" data-target="3">0</div>
-                <p>+ 3ans d'expérience</p>
+                <div class="counter-value" data-target="3" data-prefix="" data-suffix="">0</div>
+                <p>ans d'expérience</p>
             </div>
             <div class="col-6 col-md-3 mb-4 mb-md-0">
-                <div class="counter" data-target="10">+0</div>
-                <p> experts</p>
+                <div class="counter-value" data-target="10" data-prefix="+" data-suffix="">0</div>
+                <p>experts</p>
             </div>
             <div class="col-6 col-md-3">
-                <div class="counter" data-target="45">+0</div>
-                <p> projets livrés</p>
+                <div class="counter-value" data-target="45" data-prefix="+" data-suffix="">0</div>
+                <p>projets livrés</p>
             </div>
             <div class="col-6 col-md-3">
-                <div class="counter" data-target="100">+0</div>
-                <p> de satisfaction</p>
+                <div class="counter-value" data-target="100" data-prefix="" data-suffix="%">0</div>
+                <p>de satisfaction</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Partners Carousel -->
-<!-- Section Partenaires -->
-<section class="partners-section py-5 bg-light">
+<!-- Section partenaires -->
+<section class="partners-section py-5 bg-white">
     <div class="container">
         <h2 class="text-center mb-5">Nos <span class="text-primary">Partenaires</span></h2>
-        
+
         <div id="partnersCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-                {% for partner in partners %}
-                <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                    <div class="row justify-content-center">
-                        {% for p in partners|slice:":6" %}  <!-- 6 logos par slide -->
-                        <div class="col-4 col-md-2 text-center py-3">
-                            <img src="{{ p.logo.url }}" 
-                                 alt="{{ p.name }}" 
-                                 class="img-fluid partner-logo">
+                {% for partners_group in partners|batch:3 %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <div class="row justify-content-center align-items-center">
+                            {% for partner in partners_group %}
+                                <div class="col-6 col-sm-4 col-md-2 text-center p-3">
+                                    <div class="partner-logo-container">
+                                        <img src="{{ partner.logo.url }}"
+                                             alt="{{ partner.name }}"
+                                             class="img-fluid partner-logo">
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
                     </div>
-                </div>
                 {% endfor %}
             </div>
+
+            <!-- Boutons de contrôle -->
             <button class="carousel-control-prev" type="button" data-bs-target="#partnersCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Précédent</span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#partnersCarousel" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Suivant</span>
             </button>
         </div>
     </div>
 </section>
 
 <!-- Contact Form -->
-<section class="py-5 bg-light">
+<section class="py-5 bg-light" id="contact">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8">
@@ -164,70 +199,5 @@
         </div>
     </div>
 </section>
+{% endblock content %}
 
-
-
-{% endblock %}
-{% block extra_js %}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Animation des compteurs
-        const animateCounters = () => {
-            const counters = document.querySelectorAll('.counter');
-            const speed = 200;
-            
-            counters.forEach(counter => {
-                const target = +counter.getAttribute('data-target');
-                const count = +counter.innerText;
-                const increment = target / speed;
-                
-                if (count < target) {
-                    counter.innerText = Math.ceil(count + increment);
-                    setTimeout(animateCounters, 1);
-                } else {
-                    counter.innerText = target + (counter.getAttribute('data-target') === '100' ? '%' : '+';
-                }
-            });
-        };
-    
-        // Observer pour déclencher l'animation
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateCounters();
-                    observer.unobserve(entry.target); // Arrête d'observer après déclenchement
-                }
-            });
-        }, { 
-            threshold: 0.5,
-            rootMargin: '0px 0px -100px 0px' // Déclenche un peu avant d'arriver à la section
-        });
-    
-        // Observer la section stats
-        const statsSection = document.getElementById('stats-section');
-        if (statsSection) {
-            observer.observe(statsSection);
-        }
-    
-        // Initialisation Swiper (si vous en avez besoin)
-        if (document.querySelector('.partner-swiper')) {
-            new Swiper('.partner-swiper', {
-                loop: true,
-                autoplay: {
-                    delay: 2500,
-                    disableOnInteraction: false,
-                },
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
-                breakpoints: {
-                    640: { slidesPerView: 2 },
-                    768: { slidesPerView: 3 },
-                    1024: { slidesPerView: 4 }
-                }
-            });
-        }
-    });
-    </script>
-{% endblock %}

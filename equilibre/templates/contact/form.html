@@ -43,41 +43,95 @@
                         </div>
                         
                         <!-- Colonne Infos -->
-                        <div class="col-md-5 bg-cobalt text-white p-4 p-lg-5">
-                            <h3 class="h4 fw-bold mb-4">Nos coordonnées</h3>
+                    <div class="col-md-5 bg-cobalt text-white p-4 p-lg-5">
+                        <h3 class="h4 fw-bold mb-4">Nos coordonnées</h3>
+                        
+                        <ul class="list-unstyled contact-list">
+                            <!-- Adresse - Texte simple -->
+                            <li class="mb-3 d-flex align-items-start">
+                                <i class="fas fa-map-marker-alt mt-1 me-3"></i>
+                                <span>{{ config.address|default:"123 Rue Digitale, 75000 Paris" }}</span>
+                            </li>
                             
-                            <ul class="list-unstyled">
-                                <li class="mb-3">
-                                    <i class="fas fa-map-marker-alt me-3"></i>
-                                    <span>123 Rue Digitale, 75000 Paris</span>
-                                </li>
-                                <li class="mb-3">
-                                    <i class="fas fa-phone me-3"></i>
-                                    <a href="tel:+33123456789" class="text-white">+33 1 23 45 67 89</a>
-                                </li>
-                                <li class="mb-3">
-                                    <i class="fab fa-whatsapp me-3"></i>
-                                    <a href="https://wa.me/33612345678" class="text-white">+33 6 12 34 56 78</a>
-                                </li>
-                                <li class="mb-4">
-                                    <i class="fas fa-envelope me-3"></i>
-                                    <a href="mailto:contact@agence-equilibre.com" class="text-white">contact@agence-equilibre.com</a>
-                                </li>
-                            </ul>
+                            <!-- Téléphone - Lien cliquable -->
+                            <li class="mb-3 d-flex align-items-start">
+                                <i class="fas fa-phone mt-1 me-3"></i>
+                                <a href="tel:{{ config.call_phone|cut:' '|default:'+33123456789' }}" 
+                                class="text-white text-decoration-none hover-underline">
+                                {{ config.call_phone|default:"+33 1 23 45 67 89" }}
+                                </a>
+                            </li>
                             
-                            <hr class="border-white opacity-50 my-4">
+                            <!-- WhatsApp - Lien cliquable -->
+                            <li class="mb-3 d-flex align-items-start">
+                                <i class="fab fa-whatsapp mt-1 me-3"></i>
+                                <a href="https://wa.me/{{ config.whatsapp_phone|cut:' '|cut:'+'|default:'33612345678' }}" 
+                                class="text-white text-decoration-none hover-underline"
+                                target="_blank"
+                                rel="noopener noreferrer">
+                                {{ config.whatsapp_phone|default:"+33 6 12 34 56 78" }}
+                                </a>
+                            </li>
                             
-                            <h4 class="h5 fw-bold mb-3">Horaires d'ouverture</h4>
-                            <p class="small mb-0">Lun-Ven : 9h-18h</p>
-                            <p class="small">Sam : 10h-14h</p>
+                            <!-- Email - Lien cliquable -->
+                            <li class="mb-4 d-flex align-items-start">
+                                <i class="fas fa-envelope mt-1 me-3"></i>
+                                <a href="mailto:{{ config.email|default:'contact@exemple.com' }}" 
+                                class="text-white text-decoration-none hover-underline">
+                                {{ config.email|default:"contact@exemple.com" }}
+                                </a>
+                            </li>
+                        </ul>
+                        
+                        <hr class="border-white opacity-50 my-4">
+                        
+                        <!-- Horaires - Texte simple -->
+                        <h4 class="h5 fw-bold mb-3">Horaires d'ouverture</h4>
+                        <p class="small mb-0">{{ config.horaires|default:"Lun-Ven : 9h-18h" }}</p>
+                        
+                        <!-- Réseaux sociaux -->
+                        <div class="mt-4 pt-2 social-links">
+                            {% if config.social_facebook %}
+                            <a href="{{ config.social_facebook }}" class="text-white me-3" 
+                            target="_blank" rel="noopener noreferrer"
+                            aria-label="Notre page Facebook">
+                                <i class="fab fa-facebook-f fa-lg hover-scale"></i>
+                            </a>
+                            {% endif %}
                             
-                            <div class="mt-4 pt-2">
-                                <a href="#" class="text-white me-3"><i class="fab fa-facebook-f fa-lg"></i></a>
-                                <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in fa-lg"></i></a>
-                                <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
-                                <a href="#" class="text-white"><i class="fab fa-twitter fa-lg"></i></a>
-                            </div>
+                            {% if config.social_linkedin %}
+                            <a href="{{ config.social_linkedin }}" class="text-white me-3" 
+                            target="_blank" rel="noopener noreferrer"
+                            aria-label="Notre page LinkedIn">
+                                <i class="fab fa-linkedin-in fa-lg hover-scale"></i>
+                            </a>
+                            {% endif %}
+                            
+                            {% if config.social_instagram %}
+                            <a href="{{ config.social_instagram }}" class="text-white me-3" 
+                            target="_blank" rel="noopener noreferrer"
+                            aria-label="Notre page Instagram">
+                                <i class="fab fa-instagram fa-lg hover-scale"></i>
+                            </a>
+                            {% endif %}
+                            
+                            {% if config.social_twitter %}
+                            <a href="{{ config.social_twitter }}" class="text-white me-3" 
+                            target="_blank" rel="noopener noreferrer"
+                            aria-label="Notre compte Twitter">
+                                <i class="fab fa-twitter fa-lg hover-scale"></i>
+                            </a>
+                            {% endif %}
+                            
+                            {% if config.social_youtube %}
+                            <a href="{{ config.social_youtube }}" class="text-white" 
+                            target="_blank" rel="noopener noreferrer"
+                            aria-label="Notre chaîne YouTube">
+                                <i class="fab fa-youtube fa-lg hover-scale"></i>
+                            </a>
+                            {% endif %}
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>

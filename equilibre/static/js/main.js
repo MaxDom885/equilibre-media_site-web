@@ -1,33 +1,42 @@
-// Animation des compteurs
+// Animation des compteurs - Version corrigée
 function initCounters() {
-    const counters = document.querySelectorAll('.counter');
-    const speed = 200;
-    
-    function animateCounters() {
-        counters.forEach(counter => {
-            const target = +counter.getAttribute('data-target');
-            const count = +counter.innerText.replace(/\D/g, '');
-            const increment = target / speed;
+    const counterElements = document.querySelectorAll('.counter-value'); // Utilisez la bonne classe
+    const animationDuration = 2000; // Durée totale en ms
+    let animationStarted = false;
+
+    function animateCounter(counter) {
+        const target = +counter.getAttribute('data-target');
+        const prefix = counter.getAttribute('data-prefix') || '';
+        const suffix = counter.getAttribute('data-suffix') || '';
+        let startTimestamp = null;
+
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / animationDuration, 1);
+            const currentValue = Math.floor(progress * target);
+            counter.textContent = prefix + currentValue + suffix;
             
-            if (count < target) {
-                counter.innerText = Math.ceil(count + increment);
-                setTimeout(animateCounters, 1);
-            } else {
-                counter.innerText = target + (counter.getAttribute('data-target') === '100' ? '%' : '+');
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
             }
-        });
+        };
+
+        window.requestAnimationFrame(step);
     }
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateCounters();
-                observer.unobserve(entry.target);
+            if (entry.isIntersecting && !animationStarted) {
+                animationStarted = true;
+                counterElements.forEach(counter => {
+                    animateCounter(counter);
+                });
+                observer.disconnect();
             }
         });
     }, { 
         threshold: 0.5,
-        rootMargin: '0px 0px -50px 0px'
+        rootMargin: '0px 0px -100px 0px' // Déclenche un peu avant d'arriver à la section
     });
 
     const statsSection = document.querySelector('.bg-cobalt');
@@ -36,11 +45,11 @@ function initCounters() {
     }
 }
 
-// Initialisation quand le DOM est chargé
+// Initialisation
 document.addEventListener('DOMContentLoaded', function() {
     initCounters();
     
-    // Votre autre code d'initialisation...
+    // Initialisation du slider (si nécessaire)
     if (document.querySelector('.partner-swiper')) {
         new Swiper('.partner-swiper', {
             loop: true,

@@ -1,4 +1,3 @@
-# contact/models.py
 from django.db import models
 
 class ContactRequest(models.Model):
