@@ -14,13 +14,15 @@ class ServiceDetailView(DetailView):
     model = Service
     template_name = 'services/service_detail.html'
     context_object_name = 'service'
-    slug_url_kwarg = 'slug'  # Le paramètre URL sera 'slug'
+    slug_url_kwarg = 'slug'
 
     def get_queryset(self):
         return Service.objects.filter(is_active=True)
-    
-    
-    
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['all_services'] = Service.objects.filter(is_active=True).exclude(id=self.object.id)
+        return context
     
     
 

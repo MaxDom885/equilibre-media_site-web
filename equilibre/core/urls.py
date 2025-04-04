@@ -1,6 +1,6 @@
 # core/urls.py
 from django.urls import path, include
-from .views import HomeView, AboutView, ServicesView
+from .views import HomeView, AboutView
 
 urlpatterns = [
     # Page d'accueil
@@ -15,6 +15,5 @@ urlpatterns = [
     path("contact/", include("contact.urls")),   # Contact avec préfixe clair
     path("partenaires/", include("partners.urls")),  # Partenaires avec préfixe
     
-    # SEO : URLs alternatives pour rétrocompatibilité
-    path("nos-services/", ServicesView.as_view(), name="services-legacy"),
+    
 ]

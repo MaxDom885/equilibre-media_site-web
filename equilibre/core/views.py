@@ -24,6 +24,5 @@ class AboutView(TemplateView):
         context['members'] = Member.objects.filter(is_active=True)
         return context 
 
-class ServicesView (TemplateView):
-    template_name= "core/services.html"
+
 
