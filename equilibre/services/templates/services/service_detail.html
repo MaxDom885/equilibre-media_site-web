@@ -48,7 +48,7 @@
 {% block content %}
 <main class="service-detail-page">
   
-    <header class="service-header text-white" style="background-image: url('{{ service.header_image.url }}')">
+    <header class="service-header text-white mb-5" style="background-image: url('{{ service.header_image.url }}')">
         <div class="container position-relative z-index-1">
             <div class="row justify-content-center">
                 <div class="col-md-10 text-center">
@@ -61,21 +61,21 @@
             </div>
         </div>
     </header>
-
-    <!-- Section Description Complète -->
-    <section class="py-6 description-section animate-on-scroll">
+<!-- Section Description Complète -->
+<section class="py-7 description-section animate-on-scroll mb-5">
+    <div class="animated-background">
         <div class="container">
             <div class="row g-5 align-items-center">
                 <div class="col-lg-6">
                     <div class="media-wrapper rounded-4 shadow-lg overflow-hidden hover-scale">
-                        <img src="{{ service.image.url }}" 
+                        <img src="{{ service.full_description_image.url }}" 
                              alt="{{ service.name }}" 
                              class="img-fluid"
                              loading="lazy">
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="ps-xl-4">
+                    <div class="ps-xl-4 text-center">
                         <h2 class="display-5 mb-4 gradient-text">Notre approche</h2>
                         <div class="service-description fs-5 lh-lg glassmorphism-effect">
                             {{ service.full_description|safe }}
@@ -84,11 +84,13 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Section Atouts -->
-    {% if service.strengths_image %}
-    <section class="py-6 strengths-section animate-on-scroll">
+<!-- Section Atouts -->
+{% if service.strengths_image %}
+<section class="py-7 strengths-section animate-on-scroll mb-5">
+    <div class="animated-background">
         <div class="container">
             <div class="row g-5 align-items-center">
                 <div class="col-lg-6 order-lg-0">
@@ -100,7 +102,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 order-lg-1">
-                    <div class="ps-xl-4">
+                    <div class="ps-xl-4 text-center">
                         <h2 class="display-5 mb-4 gradient-text">Nos atouts techniques</h2>
                         <div class="strengths-text glassmorphism-effect">
                             {{ service.strengths_text|linebreaks }}
@@ -109,11 +111,12 @@
                 </div>
             </div>
         </div>
-    </section>
-    {% endif %}
+    </div>
+</section>
+{% endif %}
 
     <!-- Section CTA -->
-    <section class="py-6 cta-section animate-on-scroll">
+    <section class="py-6 cta-section animate-on-scroll mt-5">
         <div class="container text-center">
             <a href="{% url 'contact_form' %}?service={{ service.slug }}" 
                class="btn btn-cta animated-btn">

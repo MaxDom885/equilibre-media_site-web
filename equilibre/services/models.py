@@ -7,6 +7,7 @@ class Service(models.Model):
     full_description = models.TextField()
     image = models.ImageField(upload_to='services/')
     is_active = models.BooleanField(default=True)
+    full_description_image = models.ImageField(upload_to='services/', blank=True)
     is_featured = models.BooleanField(
         default=False,
         help_text="Cocher pour afficher ce service en page d'accueil"

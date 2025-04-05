@@ -17,7 +17,7 @@ class ServiceAdmin(admin.ModelAdmin):
             'description': "Contenu textuel du service"
         }),
         ('Gestion des images', {
-            'fields': ('image', 'header_image', 'strengths_image'),
+            'fields': ('image', 'header_image', 'strengths_image', 'full_description_image'),
             'classes': ('collapse',)
         }),
     )
