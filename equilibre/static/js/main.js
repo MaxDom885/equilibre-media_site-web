@@ -1,27 +1,30 @@
-// Animation des compteurs - Version corrigée
+// Animation des compteurs - Version améliorée
 function initCounters() {
-    const counterElements = document.querySelectorAll('.counter-value'); // Utilisez la bonne classe
-    const animationDuration = 2000; // Durée totale en ms
+    const counterElements = document.querySelectorAll('[data-target]');
     let animationStarted = false;
 
     function animateCounter(counter) {
-        const target = +counter.getAttribute('data-target');
-        const prefix = counter.getAttribute('data-prefix') || '';
-        const suffix = counter.getAttribute('data-suffix') || '';
-        let startTimestamp = null;
+        const target = +counter.dataset.target;
+        const prefix = counter.dataset.prefix || '';
+        const suffix = counter.dataset.suffix || '';
+        const duration = 2000; // 2 secondes
+        const startValue = 0;
+        const startTime = Date.now();
 
-        const step = (timestamp) => {
-            if (!startTimestamp) startTimestamp = timestamp;
-            const progress = Math.min((timestamp - startTimestamp) / animationDuration, 1);
-            const currentValue = Math.floor(progress * target);
+        const updateCounter = () => {
+            const currentTime = Date.now();
+            const elapsedTime = currentTime - startTime;
+            const progress = Math.min(elapsedTime / duration, 1);
+            
+            const currentValue = Math.floor(progress * (target - startValue) + startValue);
             counter.textContent = prefix + currentValue + suffix;
             
             if (progress < 1) {
-                window.requestAnimationFrame(step);
+                requestAnimationFrame(updateCounter);
             }
         };
 
-        window.requestAnimationFrame(step);
+        requestAnimationFrame(updateCounter);
     }
 
     const observer = new IntersectionObserver((entries) => {
@@ -31,37 +34,48 @@ function initCounters() {
                 counterElements.forEach(counter => {
                     animateCounter(counter);
                 });
-                observer.disconnect();
             }
         });
-    }, { 
+    }, {
         threshold: 0.5,
-        rootMargin: '0px 0px -100px 0px' // Déclenche un peu avant d'arriver à la section
+        rootMargin: '0px 0px -50px 0px'
     });
 
-    const statsSection = document.querySelector('.bg-cobalt');
-    if (statsSection) {
-        observer.observe(statsSection);
+    if (counterElements.length > 0) {
+        counterElements.forEach(counter => {
+            observer.observe(counter);
+        });
     }
 }
 
-// Initialisation
-document.addEventListener('DOMContentLoaded', function() {
-    initCounters();
-    
-    // Initialisation du slider (si nécessaire)
-    if (document.querySelector('.partner-swiper')) {
-        new Swiper('.partner-swiper', {
-            loop: true,
-            autoplay: {
-                delay: 2500,
-                disableOnInteraction: false,
-            },
-            breakpoints: {
-                640: { slidesPerView: 2 },
-                768: { slidesPerView: 3 },
-                1024: { slidesPerView: 4 }
-            }
+// Initialisation du carousel des partenaires
+function initPartnersCarousel() {
+    const partnersCarousel = document.getElementById('partnersCarousel');
+    if (partnersCarousel) {
+        new bootstrap.Carousel(partnersCarousel, {
+            interval: 3000,
+            wrap: true
         });
     }
+}
+
+// Initialisation globale
+document.addEventListener('DOMContentLoaded', function() {
+    initCounters();
+    initPartnersCarousel();
+    
+    // Initialisation des carousels Bootstrap
+    const carousels = document.querySelectorAll('.carousel');
+    carousels.forEach(carousel => {
+        new bootstrap.Carousel(carousel);
+    });
+});
+
+// Partenaires Carousel - Auto Play
+document.addEventListener('DOMContentLoaded', function() {
+    const partnersCarousel = new bootstrap.Carousel('#partnersCarousel', {
+        interval: 3000,  // Rotation toutes les 3 secondes
+        wrap: true,
+        pause: false
+    });
 });

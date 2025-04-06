@@ -7,27 +7,30 @@
 
 {% block content %}
 <!-- Hero Carousel -->
-<section class="hero-carousel fade-in">
-    <div id="mainCarousel" class="carousel slide h-100" data-bs-ride="carousel">
+<section class="hero-carousel">
+    <div id="mainCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
         <div class="carousel-inner h-100">
             {% for i in "123" %}
             <div class="carousel-item h-100 {% if forloop.first %}active{% endif %}">
-                <img src="{% static 'img/hero-'|add:i|add:'.jpg' %}" class="d-block w-100" alt="Slide {{ i }}">
-                <div class="carousel-caption">
+                <img src="{% static 'img/hero-'|add:i|add:'.jpg' %}" class="d-block w-100 h-100" alt="Slide {{ i }}" style="object-fit: cover;">
+                <div class="carousel-caption d-flex align-items-center justify-content-start">
                     <div class="container">
                         <h1 class="display-1 fw-bold mb-4">Trouvez l'équilibre<br>entre <span class="text-cobalt">INNOVATION</span><br>et <span class="text-accent">PERFORMANCE</span>.</h1>
-                        <a href="{% url 'contact_form' %}" class="btn btn-accent btn-lg px-4">Démarrons votre projet</a>
+                        <a href="{% url 'contact_form' %}" class="btn btn-accent btn-lg py-3 px-4 fw-bold hover-scale">
+                            Démarrons votre projet
+                        </a>
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
-        <!-- Contrôles -->
         <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
         </button>
     </div>
 </section>
@@ -43,7 +46,7 @@
                 <h2 class="mb-4">Une approche <span class="text-primary">humaine</span> du digital</h2>
                 <p class="lead">Nous transformons les idées audacieuses en solutions technologiques performantes.</p>
                 <p>Notre agence allie expertise technique et vision stratégique pour propulser votre présence digitale.</p>
-                <a href="{% url 'about' %}" class="btn btn-primary mt-3">Découvrir notre agence</a>
+                <a href="{% url 'about' %}" class="btn btn-accent px-4">Découvrir notre agence</a>
             </div>
         </div>
     </div>
@@ -133,34 +136,29 @@
     <div class="container">
         <h2 class="text-center mb-5">Nos <span class="text-primary">Partenaires</span></h2>
 
-        <div id="partnersCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                {% for partners_group in partners|batch:3 %}
+        <div class="partners-carousel-wrapper">
+            <div id="partnersCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000" data-bs-pause="hover">
+                <div class="carousel-inner">
+                    {% for partner in partners %}
                     <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                        <div class="row justify-content-center align-items-center">
-                            {% for partner in partners_group %}
-                                <div class="col-6 col-sm-4 col-md-2 text-center p-3">
-                                    <div class="partner-logo-container">
-                                        <img src="{{ partner.logo.url }}"
-                                             alt="{{ partner.name }}"
-                                             class="img-fluid partner-logo">
-                                    </div>
-                                </div>
-                            {% endfor %}
+                        <div class="partner-item">
+                            <a href="{{ partner.url|default:'#' }}" target="_blank" class="d-block h-100">
+                                <img src="{{ partner.logo.url }}" 
+                                     alt="{{ partner.name }}" 
+                                     class="partner-logo"
+                                     title="{{ partner.name }}">
+                            </a>
                         </div>
                     </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#partnersCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#partnersCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
             </div>
-
-            <!-- Boutons de contrôle -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#partnersCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Précédent</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#partnersCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Suivant</span>
-            </button>
         </div>
     </div>
 </section>
